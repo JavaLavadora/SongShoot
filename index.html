@@ -2,37 +2,21 @@
 <html>
 
 <head>
-	<title>Trip Mixer</title>
-	<link rel="stylesheet" href="style/style.css">
+	<title>Previa Dev Mixer</title>
+	<link rel="stylesheet" href="style/index.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
 </head>
 
 <body>
-<h1>Current SONG</h1>
-<button onclick="promote()">Change Song</button>
-Playing:
-<pre id="song1">Empty</pre>
+  <p>
+    Who do you want to be?
+  </p>
 
-<pre id="song2">Empty</pre>
+  <button onclick="redirectClt()">CLIENT</button>
+  <button onclick="redirectSrv()">SERVER</button>
 
-<pre id="song3">Empty</pre>
 
-<pre id="song4">Empty</pre>
-
-<pre id="song5">Empty</pre>
-
-<p>
-	Entered song:
-</p>
-<p id="inputSong"></p>
-
-<p>
-	Send song:
-</p>
-<input name="Paste URL" id="sendSong" />
-<button onclick="send()">GO!</button>
 </body>
-
-<script src="Javascript/javascript.js"></script>
+<script src="Javascript/index.js"></script>
 </html>
