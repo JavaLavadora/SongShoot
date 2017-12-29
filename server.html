@@ -3,36 +3,80 @@
 
 <head>
 	<title>Previa DJ</title>
-	<link rel="stylesheet" href="style/server.css">
+	<link rel="stylesheet" href="Style/server.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+	 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<body>
-<h1>Current SONG</h1>
-<button onclick="promote()">Change Song</button>
-Playing:
-<pre id="song1">Empty</pre>
+<body onload="loadVideo()">
+	<header>
+		<div class="headWrapper">
+      <h1>SERVER</h1>
+    </div>
+	</header>
 
-<pre id="song2">Empty</pre>
+	<div class="content-wrapper">
+		<div class="separator">
+		<div class="row">
 
-<pre id="song3">Empty</pre>
+			<div class="col-2">
+				<h2>Now Playing:</h2>
+			</div>
+			<div class="col-4">
+				<div class="frame-wrapper">
+					<iframe id="song1" width="420" height="315" src=""></iframe>
+				</div>
+			</div>
 
-<pre id="song4">Empty</pre>
+			<div class="col-1">
+			</div>
 
-<pre id="song5">Empty</pre>
+			<div class="col-5">
+				<div class="song-wrapper">
+					<h4>
+						QUEUE:
+					</h4>
 
-<p>
-	Entered song:
-</p>
-<p id="inputSong"></p>
+					<pre id="song2">Empty</pre>
 
-<p>
-	Send song:
-</p>
-<input name="Paste URL" id="sendSong" />
-<button onclick="send()">GO!</button>
+					<pre id="song3">Empty</pre>
+
+					<pre id="song4">Empty</pre>
+
+					<pre id="song5">Empty</pre>
+
+					<div class="button" onclick="promote()"><i id="forward" class="fa fa-fast-forward" aria-hidden="true"></i></div>
+
+				</div>
+			</div>
+
+		</div>
+		</div>
+
+		<div class="row">
+			<div class="col-6">
+				<h3>
+					Last song:
+				</h3>
+				<p id="inputSong"></p>
+			</div>
+			<div class="col-2">
+				<h5 class="send">
+						Send song:
+				</h5>
+			</div>
+			<div class="col-2">
+				<input name="Paste URL" id="sendSong" />
+			</div>
+			<div class="col-2">
+				<div class="button" onclick="send()"><i class="fa fa-paper-plane" id="go" aria-hidden="true"></i></div>
+			</div>
+		</div>
+	</div>
 </body>
 
 <script src="Javascript/server.js"></script>
+
 </html>
