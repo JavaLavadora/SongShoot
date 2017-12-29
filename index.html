@@ -3,18 +3,37 @@
 
 <head>
 	<title>Previa Dev Mixer</title>
-	<link rel="stylesheet" href="style/index.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="Style/index.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
 </head>
 
 <body>
-  <p>
-    Who do you want to be?
-  </p>
 
-  <button onclick="redirectClt()">CLIENT</button>
-  <button onclick="redirectSrv()">SERVER</button>
+  <header>
+    <div class="headWrapper">
+      <h1>Previa Dev Mixer</h1>
+    </div>
+  </header>
+</div>
+</div>
+
+
+  <div class="greet-wrapper">
+    <p class="greeting">
+      Who do you want to be?
+    </p>
+  </div>
+
+
+
+  <div class=buttons>
+    <i id="button-left" onclick="redirectSrv()" class="fa fa-desktop"></i>
+    <i id="button-right" onclick="redirectClt()" class="fa fa-user-circle-o"></i>
+  </div>
+
 
 
 </body>
