@@ -146,7 +146,7 @@ function append() {
   //Check if there are empty slots in queue
   if(aux1==="Empty"){
     //Front-End
-    document.getElementById("song1").innerHTML = getInput();
+    document.getElementById("song1").src = getInput();
 
     updates["/top1"] = getInput();
     firebase.database().ref().update(updates);
@@ -171,7 +171,7 @@ function append() {
   else if(aux4==="Empty"){
     //Front-End
     document.getElementById("song4").innerHTML = getInput();
-    
+
     updates["/top4"] = getInput();
     firebase.database().ref().update(updates);
   }
@@ -207,7 +207,7 @@ function promote() {
   updates["/top1"] = getTop2();
   firebase.database().ref().update(updates);
   //Front-End
-  document.getElementById("song1").innerHTML = getTop2();
+  document.getElementById("song1").src = getTop2();
 
   updates["/top2"] = getTop3();
   firebase.database().ref().update(updates);
@@ -235,10 +235,31 @@ function promote() {
 
 function send(evt) {
   var song = document.getElementById("sendSong").value;
-  console.log(song);
+
+  song = parseURL(song);
 
   updates["/inputSong"] = song;
   firebase.database().ref().update(updates);
   //Front-End
+  document.getElementById("inputSong").innerHTML = song;
+}
+
+function parseURL(song) {
+  var res = song.split("/");
+  var code = res[res.length-1];
+  var url = "https://www.youtube.com/embed/" + code + "?autoplay=1";
+  console.log("code");
+
+  return url;
+}
+
+function loadVideo() {
+  var song = "https://youtu.be/16W7c0mb-rE";
+
+  song = parseURL(song);
+
+  updates["/inputSong"] = song;
+  firebase.database().ref().update(updates);
+
   document.getElementById("inputSong").innerHTML = song;
 }
