@@ -19,6 +19,16 @@ var updates = {};
 function send(evt) {
   var song = document.getElementById("sendSong").value;
 
+  song = parseURL(song);
+  
   updates["/inputSong"] = song;
   firebase.database().ref().update(updates);
+
+}
+
+function parseURL(song) {
+  var res = song.split("/");
+  var code = res[res.length-1];
+  // var url = "https://www.youtube.com/embed/" + code + "?autoplay=1";
+  return code;
 }
