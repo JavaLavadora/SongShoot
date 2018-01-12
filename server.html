@@ -7,10 +7,10 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
-	 <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 </head>
 
-<body onload="loadVideo()">
+<body > <!-- onload="loadVideo()" -->
 	<header>
 		<div class="headWrapper">
       <h1>SERVER</h1>
@@ -25,13 +25,13 @@
 				<h2>Now Playing:</h2>
 			</div>
 			<div class="col-4">
-				<div class="frame-wrapper">
-					<iframe id="song1" width="420" height="315" src=""></iframe>
+				<div id="frame-wrapper">
+					<!-- <iframe id="song1" src=""></iframe> -->
 				</div>
 			</div>
 
-			<div class="col-1">
-			</div>
+			<!-- <div class="col-1">
+			</div> -->
 
 			<div class="col-5">
 				<div class="song-wrapper">
@@ -75,8 +75,16 @@
 			</div>
 		</div>
 	</div>
+
+	<footer>
+		<div class="foot-wrapper">
+			Made By: <a class="vendesio" href="http://github.com/lavendiciondevs">La Vendicion Devs</a>
+		</div>
+	</footer>
+
 </body>
 
+<script src="https://www.youtube.com/iframe_api"></script>
 <script src="Javascript/server.js"></script>
 
 </html>
