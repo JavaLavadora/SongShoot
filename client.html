@@ -3,17 +3,36 @@
 
 <head>
 	<title>Previa Acojonados de ser DJ</title>
-	<link rel="stylesheet" href="style/client.css">
+	<link rel="stylesheet" href="Style/client.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-<p>
-	Send song:
-</p>
-<input name="Paste URL" id="sendSong" />
-<button onclick="send()">GO!</button>
+	<header>
+		<div class="headWrapper">
+			<h1>CLIENT</h1>
+		</div>
+	</header>
+
+	<div class="content-wrapper">
+
+		<h2>
+			Send song:
+		</h2>
+
+		<input name="Paste URL" id="sendSong" />
+		<div class="button" onclick="send()"><i class="fa fa-paper-plane" id="go" aria-hidden="true"></i></div>
+
+	</div>
+
+	<footer>
+		<div class="foot-wrapper">
+			Made By: <a class="vendesio" href="http://github.com/lavendiciondevs">La Vendicion Devs</a>
+		</div>
+	</footer>
 </body>
 
 <script src="Javascript/client.js"></script>
