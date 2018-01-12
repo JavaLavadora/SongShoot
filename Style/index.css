@@ -77,6 +77,36 @@ h1 {
   border-radius: 20%;
 }
 
+.foot-wrapper {
+
+  margin-top: 2%;
+  margin-bottom: 1.5%;
+  margin-right: 1%;
+  font-family: "Roboto";
+  color: white;
+  font-size: 140%;
+}
+
+.vendesio {
+  margin-left: 0%;
+  color: #BDBDBD;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+footer{
+  background-color: #00897b;
+  color: black;
+  clear: both;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 
 /*Desktop*/
 @media only screen and (min-width: 768px) {
@@ -178,6 +208,36 @@ h1 {
     padding: 3%;
     border: solid grey;
     border-radius: 20%;
+  }
+
+  .foot-wrapper {
+    float: right;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-right: 1%;
+    font-family: "Roboto";
+    color: white;
+    font-size: 140%;
+  }
+
+  .vendesio {
+    margin-left: 0%;
+    color: #BDBDBD;
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
+
+  footer{
+    background-color: #00897b;
+    color: black;
+    clear: both;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
   }
 
 
