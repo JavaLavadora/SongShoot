@@ -1,5 +1,6 @@
 var counter = 0;
 var lock = 0;
+var prepare = 1;
 
 var song1 = "Empty";
 var song2 = "Empty";
@@ -7,6 +8,36 @@ var song3 = "Empty";
 var song4 = "Empty";
 var song5 = "Empty";
 var songInput = "Empty";
+
+var tag = document.createElement('script');
+
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+var player;
+
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('frame-wrapper', {
+        width: 600,
+        height: 300,
+        videoId: 'Empty',
+        events: {
+            onReady: onPlayerReady,
+            onStateChange: onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerReady(event) {
+  event.target.playVideo();
+}
+
+function onPlayerStateChange(event) {
+  if(event.data===YT.PlayerState.ENDED){
+    promote();
+  }
+
+}
 
 var updates = {};
 
@@ -43,11 +74,17 @@ var updates = {};
   const dbRefTop4 = firebase.database().ref().child("top4");
   const dbRefTop5 = firebase.database().ref().child("top5");
   //Sync object changes
+
   dbRefResult.on('value', snap => {
     const name = snap.val();
     console.log(name);
     setInput(name);
-    add(name);
+    if(lock===0){
+      add(name);
+    }
+    else{
+      lock = 0;
+    }
   });
 
   dbRefTop1.on('value', snap => {
@@ -74,6 +111,8 @@ var updates = {};
     const top5 = snap.val();
     setTop5(top5);
   });
+
+
 
 } ());
 
@@ -128,12 +167,20 @@ function getInput() {
 function add(name) {
     document.getElementById("inputSong").innerHTML = name;
     //Do not allow changes if already 5 songs
-    if(counter<6 && lock===0){ //For some reason it performs an iterations with all empty at the begginings
+    if(counter<6){ //For some reason it performs an iterations with all empty at the begginings
       append();
     }
 }
 
 function append() {
+  if(prepare===1){ //We cannot lock in the first append performed as it always produces an exception and does not unlock
+      lock = 0;
+  }
+  else{
+    lock = 1;
+  }
+  prepare = 0;
+
 
   var aux5 = getTop5();
   var aux4 = getTop4();
@@ -141,60 +188,72 @@ function append() {
   var aux2 = getTop2();
   var aux1 = getTop1();
 
-  counter++;
-  lock = 1;
   //Check if there are empty slots in queue
-  if(aux1==="Empty"){
-    //Front-End
-    document.getElementById("song1").src = getInput();
 
+  if(aux1==="Empty"){ //PLAYER
+    //Front-End
+    player.loadVideoById({videoId: getInput()});
+
+    //Back-End
     updates["/top1"] = getInput();
     firebase.database().ref().update(updates);
+
+    updates["/inputSong"] = "Empty";
+    firebase.database().ref().update(updates);
+    document.getElementById("inputSong").innerHTML = "Empty";
   }
 
   else if(aux2==="Empty"){
-    //Front-End
     document.getElementById("song2").innerHTML = getInput();
 
     updates["/top2"] = getInput();
     firebase.database().ref().update(updates);
+
+    updates["/inputSong"] = "Empty";
+    firebase.database().ref().update(updates);
+    document.getElementById("inputSong").innerHTML = "Empty";
  }
 
   else if(aux3==="Empty"){
-    //Front-End
     document.getElementById("song3").innerHTML = getInput();
 
     updates["/top3"] = getInput();
     firebase.database().ref().update(updates);
+
+    updates["/inputSong"] = "Empty";
+    firebase.database().ref().update(updates);
+    document.getElementById("inputSong").innerHTML = "Empty";
   }
 
   else if(aux4==="Empty"){
-    //Front-End
     document.getElementById("song4").innerHTML = getInput();
 
     updates["/top4"] = getInput();
     firebase.database().ref().update(updates);
-  }
-  else{ //Queue is full and song 5 slot is free
-    //Front-End
-    document.getElementById("song5").innerHTML = getInput();
 
-    updates["/top5"] = getInput();
+    updates["/inputSong"] = "Empty";
     firebase.database().ref().update(updates);
+    document.getElementById("inputSong").innerHTML = "Empty";
   }
 
-  updates["/inputSong"] = "Empty";
-  firebase.database().ref().update(updates);
-  document.getElementById("inputSong").innerHTML = "Empty";
+  else{
+    if(aux5==="Empty"){ //song 5 slot is free
+      document.getElementById("song5").innerHTML = getInput();
+
+      updates["/top5"] = getInput();
+      firebase.database().ref().update(updates);
+
+      updates["/inputSong"] = "Empty";
+      firebase.database().ref().update(updates);
+      document.getElementById("inputSong").innerHTML = "Empty";
+    }
+  }
 
   lock = 0;
 }
 
 function promote() {
-   var auxNew = getInput();
-
-   updates["/inputSong"] = "Empty";
-   firebase.database().ref().update(updates);
+  var auxNew = getInput();
 
   //In other case the queue reamins the same size
   if(auxNew==="Empty"){
@@ -207,30 +266,40 @@ function promote() {
   updates["/top1"] = getTop2();
   firebase.database().ref().update(updates);
   //Front-End
-  document.getElementById("song1").src = getTop2();
+  player.loadVideoById({videoId: getTop2()});
+
 
   updates["/top2"] = getTop3();
   firebase.database().ref().update(updates);
   //Front-End
   document.getElementById("song2").innerHTML = getTop3();
 
+
   updates["/top3"] = getTop4();
   firebase.database().ref().update(updates);
   //Front-End
   document.getElementById("song3").innerHTML = getTop4();
+
 
   updates["/top4"] = getTop5();
   firebase.database().ref().update(updates);
   //Front-End
   document.getElementById("song4").innerHTML = getTop5();
 
+  counter--;
+  append();
+
   updates["/top5"] = auxNew;
   firebase.database().ref().update(updates);
   //Front-End
   document.getElementById("song5").innerHTML = auxNew;
 
+
+
+  updates["/inputSong"] = "Empty";
+  firebase.database().ref().update(updates);
+
 }
-//TODO see how can we know when a youtube video has finished to trigger promote
 
 
 function send(evt) {
@@ -240,6 +309,7 @@ function send(evt) {
 
   updates["/inputSong"] = song;
   firebase.database().ref().update(updates);
+
   //Front-End
   document.getElementById("inputSong").innerHTML = song;
 }
@@ -247,19 +317,6 @@ function send(evt) {
 function parseURL(song) {
   var res = song.split("/");
   var code = res[res.length-1];
-  var url = "https://www.youtube.com/embed/" + code + "?autoplay=1";
-  console.log("code");
-
-  return url;
-}
-
-function loadVideo() {
-  var song = "https://youtu.be/16W7c0mb-rE";
-
-  song = parseURL(song);
-
-  updates["/inputSong"] = song;
-  firebase.database().ref().update(updates);
-
-  document.getElementById("inputSong").innerHTML = song;
+  // var url = "https://www.youtube.com/embed/" + code + "?autoplay=1";
+  return code;
 }
